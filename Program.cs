@@ -29,8 +29,7 @@ namespace MySimpleUtilities
 
         public Program()
         {
-            Console.WriteLine("Welcome to MSU App. Type 'msu ls' to show the current utilities list, type 'msu quit' or ':q' to quit the application");
-            Console.WriteLine("\n");
+            PrintColouredMessage("Welcome to MSU App!\nType 'msu help' to show the commands list, 'msu start {0} to start a utility or 'msu quit' to quit the app\n", ConsoleColor.DarkCyan, false);
         }
 
         public void StartProgramHub()
@@ -47,7 +46,7 @@ namespace MySimpleUtilities
                         PrintUtilitiesList();
                         break;
                     case "msu start":
-                        Console.WriteLine("Type the index of the utility that you want to start");
+                        PrintColouredMessage("Type the index of the utility that you want to start", ConsoleColor.White);
                         break;
                     case "msu start 0":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[0], ConsoleColor.DarkGreen);
@@ -65,7 +64,7 @@ namespace MySimpleUtilities
                     case "":
                         break;
                     default:
-                        Console.WriteLine("Command not found, type 'msu -help' to show the commands list");
+                        PrintColouredMessage("Command not found, type 'msu -help' to show the commands list", ConsoleColor.White);
                         break;
                 }
             }
@@ -110,17 +109,10 @@ namespace MySimpleUtilities
         /// <param name="newLine"></param>
         public static void PrintColouredMessage(string message, ConsoleColor color, bool newLine = true)
         {
-            Console.ForegroundColor = color;
+            string nLine = newLine ? "\n" : "";
 
-            if (newLine)
-            {
-                Console.WriteLine(message);
-            }
-            else
-            {
-                Console.Write(message);
-            }
-            
+            Console.ForegroundColor = color;
+            Console.WriteLine(nLine + message);
             Console.ResetColor();
         }
     }

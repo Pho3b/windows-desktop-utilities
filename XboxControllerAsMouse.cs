@@ -8,24 +8,23 @@ namespace MySimpleUtilities
 {
     class XboxControllerAsMouse
     {
-        public bool isRunning = false;
-        private readonly int screenWidth = Screen.GetBounds(new Point(0, 0)).Width;
-        private readonly int screenHeight = Screen.GetBounds(new Point(0, 0)).Height;
-        private Controller controller;
+        private readonly Controller controller;
         private State controllerState;
+        public bool isRunning = false;
+        private bool isPaused = false;
+        private bool buttonPressed = false;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const int MOUSEEVENTF_RIGHTUP = 0x0010;
         private const int MOUSEEVENTF_WHEEL = 0x0800;
-        private bool buttonPressed = false;
+
 
 
 
         public XboxControllerAsMouse()
         {
-            Point screenCoordinates = new Point(screenWidth, screenHeight);
-            Cursor.Clip = new Rectangle(new Point(0, 0), new Size(screenCoordinates));
+            controller = new Controller(UserIndex.One);
         }
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace MySimpleUtilities
         {
             try
             {
-                controller = new Controller(UserIndex.One);
                 isRunning = CheckControllerConnection();
 
                 while (isRunning)
@@ -94,7 +92,7 @@ namespace MySimpleUtilities
 
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.Start)
                 {
-                    Program.main.PrintUtilitiesList();
+                    Pause();
                 }
             }
 
@@ -142,6 +140,34 @@ namespace MySimpleUtilities
             }
         }
 
+        private void StartBackgroundListener()
+        {
+            Program.PrintColouredMessage("...now listenint in background, hold (A + B + X + Y) to resume the utility", ConsoleColor.Yellow, false);
+
+            while(isPaused)
+            {
+                controller.GetState(out controllerState);
+
+                if (controllerState.Gamepad.Buttons.HasFlag(GamepadButtonFlags.A) &&
+                    controllerState.Gamepad.Buttons.HasFlag(GamepadButtonFlags.B) &&
+                    controllerState.Gamepad.Buttons.HasFlag(GamepadButtonFlags.X) &&
+                    controllerState.Gamepad.Buttons.HasFlag(GamepadButtonFlags.Y))
+                {
+                    Resume();
+                }
+
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+
+        private void Pause()
+        {
+            isPaused = true;
+            isRunning = false;
+            Program.PrintColouredMessage("Paused application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+            StartBackgroundListener();
+        }
+
         /// <summary>
         /// TODO: Find a good buttons combination to bind to this method.
         /// Hint: All 4 buttons pressed toghether
@@ -149,8 +175,10 @@ namespace MySimpleUtilities
         /// </summary>
         private void Resume()
         {
-            isRunning = false;
+            isPaused = false;
+            isRunning = true;
             Program.PrintColouredMessage("Resumed application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+            Start();
         }
 
         /// <summary>
