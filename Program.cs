@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace MySimpleUtilities
 {
@@ -50,6 +51,7 @@ namespace MySimpleUtilities
                         break;
                     case "msu start 0":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[0], ConsoleColor.DarkGreen);
+                        ShowBalloon(Program.UTITILIES_LIST[0], "Started", 3000);
                         xboxControllerAsMouse.Start();
                         break;
                     case "msu start 1":
@@ -114,6 +116,28 @@ namespace MySimpleUtilities
             Console.ForegroundColor = color;
             Console.WriteLine(nLine + message);
             Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Show a Windows balloon notification
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="body"></param>
+        /// <param name="body"></param>
+        public static void ShowBalloon(string title, string body, int time = 3000)
+        {
+            NotifyIcon notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = SystemIcons.Information;
+            notifyIcon.Visible = true;
+
+            if (title != null && body != null)
+            {
+                notifyIcon.BalloonTipTitle = title;
+                notifyIcon.BalloonTipText = body;
+            }
+
+            notifyIcon.ShowBalloonTip(time);
+            notifyIcon.Dispose();
         }
     }
 }

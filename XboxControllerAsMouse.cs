@@ -21,7 +21,6 @@ namespace MySimpleUtilities
 
 
 
-
         public XboxControllerAsMouse()
         {
             controller = new Controller(UserIndex.One);
@@ -140,6 +139,9 @@ namespace MySimpleUtilities
             }
         }
 
+        /// <summary>
+        /// Starts a lighter update that listens to Resume buttons combination
+        /// </summary>
         private void StartBackgroundListener()
         {
             Program.PrintColouredMessage("...now listenint in background, hold (A + B + X + Y) to resume the utility", ConsoleColor.Yellow, false);
@@ -160,11 +162,15 @@ namespace MySimpleUtilities
             }
         }
 
+        /// <summary>
+        /// Pause the application and starts the BackgroundListener
+        /// </summary>
         private void Pause()
         {
             isPaused = true;
             isRunning = false;
             Program.PrintColouredMessage("Paused application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused", 3000);
             StartBackgroundListener();
         }
 
@@ -177,7 +183,8 @@ namespace MySimpleUtilities
         {
             isPaused = false;
             isRunning = true;
-            Program.PrintColouredMessage("Resumed application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+            Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed", 3000);
             Start();
         }
 
@@ -188,6 +195,7 @@ namespace MySimpleUtilities
         {
             isRunning = false;
             Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped", 3000);
         }
 
         /// <summary>
