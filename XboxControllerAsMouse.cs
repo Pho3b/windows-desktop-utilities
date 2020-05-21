@@ -8,10 +8,9 @@ namespace MySimpleUtilities
 {
     class XboxControllerAsMouse
     {
-        // Auto Format code Ctrl + K - Ctrl + F
         public bool isRunning = false;
-        private int screenWidth = Screen.GetBounds(new Point(0, 0)).Width;
-        private int screenHeight = Screen.GetBounds(new Point(0, 0)).Height;
+        private readonly int screenWidth = Screen.GetBounds(new Point(0, 0)).Width;
+        private readonly int screenHeight = Screen.GetBounds(new Point(0, 0)).Height;
         private Controller controller;
         private State controllerState;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
@@ -20,33 +19,40 @@ namespace MySimpleUtilities
         private bool buttonPressed = false;
 
 
-        /*
-         * Constructor
-         */
+
         public XboxControllerAsMouse()
         {
             Point screenCoordinates = new Point(screenWidth, screenHeight);
-            Cursor.Clip = new Rectangle(new Point(0, 0), new Size(screenCoordinates));  // TODO: check why it doesn't work on application resume.
+            Cursor.Clip = new Rectangle(new Point(0, 0), new Size(screenCoordinates));
         }
 
-        /*
-         * This is the controller main cycle.
-         */
+        /// <summary>
+        /// This is the controller main cycle
+        /// </summary>
         public void Start()
         {
-            controller = new Controller(UserIndex.One);
-
-            while (isRunning)
+            try
             {
-                Update();
-                System.Threading.Thread.Sleep(10);
+                controller = new Controller(UserIndex.One);
+                isRunning = CheckControllerConnection();
+
+                while (isRunning)
+                {
+                    Update();
+                    System.Threading.Thread.Sleep(10);
+                }
+            }
+            catch (SharpDX.SharpDXException e)
+            {
+                Program.PrintColouredMessage(e.Message, ConsoleColor.DarkRed);
+                isRunning = false;
             }
         }
 
-        /*
-        * Body of the update method, here we listen for controller input and execute actions
-        * according to the detected event.
-        */
+        /// <summary>
+        /// Body of the update method, here we listen for controller input and execute actions
+        /// according to the detected event.
+        /// </summary>
         private void Update()
         {
             controller.GetState(out controllerState);
@@ -56,9 +62,9 @@ namespace MySimpleUtilities
             ButtonActions();
         }
 
-        /*
-         * Buttons action handling
-         */
+        /// <summary>
+        /// Handling buttons action
+        /// </summary>
         private void ButtonActions()
         {
             if (buttonPressed == false)
@@ -66,6 +72,7 @@ namespace MySimpleUtilities
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.A)
                 {
                     mouse_event(MOUSEEVENTF_LEFTDOWN, Cursor.Position.X, Cursor.Position.Y, 0, 0);
+                    System.Threading.Thread.Sleep(50);
                 }
                 else
                 {
@@ -97,9 +104,9 @@ namespace MySimpleUtilities
             }
         }
 
-        /*
-         * Handling the Left Thumb actions
-         */
+        /// <summary>
+        /// Handling the Left Thumb actions
+        /// </summary>
         private void LeftThumbXAction()
         {
             short x = controllerState.Gamepad.LeftThumbX;
@@ -112,9 +119,9 @@ namespace MySimpleUtilities
             }
         }
 
-        /*
-         * Handling the Right Thumb actions
-         */
+        /// <summary>
+        /// Handling the Right Thumb actions
+        /// </summary>
         private void RightThumbXAction()
         {
             short x = controllerState.Gamepad.RightThumbX;
@@ -134,19 +141,41 @@ namespace MySimpleUtilities
             }
         }
 
-        /*
-         * Stops the current utility 
-         */
+        /// <summary>
+        /// Stops the current utility 
+        /// </summary>
         public void Stop()
         {
             isRunning = false;
-            Console.WriteLine("Stopped application {0}", Program.UTITILIES_LIST[0]);
+            Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
             Program.main.StartProgramHub();
         }
 
-        /*
-         * Imported mouse_event Method implementation from user32.dll
-         */
+        /// <summary>
+        /// Whether the software finds a connected XBOX controller or not
+        /// </summary>
+        /// <returns>
+        /// True if it finds a connected controller
+        /// </returns>
+        private bool CheckControllerConnection()
+        {
+            if (controller.IsConnected)
+            {
+                return true;
+            }
+
+            Program.PrintColouredMessage("Controller not found, please connect one", ConsoleColor.DarkRed);
+            return false;
+        }
+
+        /// <summary>
+        ///  Imported mouse_event Method implementation from user32.dll
+        /// </summary>
+        /// <param name="dwFlags"></param>
+        /// <param name="dx"></param>
+        /// <param name="dy"></param>
+        /// <param name="cButtons"></param>
+        /// <param name="dwExtraInfo"></param>
         [DllImport("user32.dll")]
         public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
     }
