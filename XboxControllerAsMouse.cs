@@ -143,6 +143,17 @@ namespace MySimpleUtilities
         }
 
         /// <summary>
+        /// TODO: Find a good buttons combination to bind to this method.
+        /// Hint: All 4 buttons pressed toghether
+        /// Implement a BackgroundUpdate method that listens only to this combination with a very long threading time
+        /// </summary>
+        private void Resume()
+        {
+            isRunning = false;
+            Program.PrintColouredMessage("Resumed application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+        }
+
+        /// <summary>
         /// Stops the current utility 
         /// </summary>
         public void Stop()
