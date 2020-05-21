@@ -15,6 +15,8 @@ namespace MySimpleUtilities
         private State controllerState;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        private const int MOUSEEVENTF_RIGHTUP = 0x0010;
         private const int MOUSEEVENTF_WHEEL = 0x0800;
         private bool buttonPressed = false;
 
@@ -67,21 +69,22 @@ namespace MySimpleUtilities
         /// </summary>
         private void ButtonActions()
         {
-            if (buttonPressed == false)
+            if (controllerState.Gamepad.Buttons != GamepadButtonFlags.None && !buttonPressed)
             {
+                buttonPressed = true;
+
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.A)
                 {
                     mouse_event(MOUSEEVENTF_LEFTDOWN, Cursor.Position.X, Cursor.Position.Y, 0, 0);
-                    System.Threading.Thread.Sleep(50);
-                }
-                else
-                {
+                    System.Threading.Thread.Sleep(10);
                     mouse_event(MOUSEEVENTF_LEFTUP, Cursor.Position.X, Cursor.Position.Y, 0, 0);
                 }
 
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.B)
                 {
-                    Console.WriteLine(controllerState.Gamepad.Buttons);
+                    mouse_event(MOUSEEVENTF_RIGHTDOWN, Cursor.Position.X, Cursor.Position.Y, 0, 0);
+                    System.Threading.Thread.Sleep(10);
+                    mouse_event(MOUSEEVENTF_RIGHTUP, Cursor.Position.X, Cursor.Position.Y, 0, 0);
                 }
 
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.Back)
@@ -93,8 +96,6 @@ namespace MySimpleUtilities
                 {
                     Program.main.PrintUtilitiesList();
                 }
-
-                buttonPressed = true;
             }
 
             if (controllerState.Gamepad.Buttons == GamepadButtonFlags.None && buttonPressed)
@@ -148,7 +149,6 @@ namespace MySimpleUtilities
         {
             isRunning = false;
             Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
-            Program.main.StartProgramHub();
         }
 
         /// <summary>
