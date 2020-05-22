@@ -84,6 +84,16 @@ namespace MySimpleUtilities
                     mouse_event(MOUSEEVENTF_RIGHTUP, Cursor.Position.X, Cursor.Position.Y, 0, 0);
                 }
 
+                if (controllerState.Gamepad.Buttons == GamepadButtonFlags.Y)
+                {
+                    Console.WriteLine("setting vibration");
+
+                    Vibration vibration = new Vibration();
+                    vibration.LeftMotorSpeed = 30;
+                    vibration.RightMotorSpeed = 30;
+                    controller.SetVibration(vibration);
+                }
+
                 if (controllerState.Gamepad.Buttons == GamepadButtonFlags.Back)
                 {
                     Stop();
