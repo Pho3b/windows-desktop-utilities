@@ -4,7 +4,7 @@ using System;
 using SharpDX.XInput;
 using System.Runtime.InteropServices;
 
-namespace MySimpleUtilities
+namespace MySimpleUtilities.Utilities
 {
     class XboxControllerAsMouse
     {
@@ -170,7 +170,7 @@ namespace MySimpleUtilities
             isPaused = true;
             isRunning = false;
             Program.PrintColouredMessage("Paused application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused", 3000);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused");
             StartBackgroundListener();
         }
 
@@ -184,7 +184,7 @@ namespace MySimpleUtilities
             isPaused = false;
             isRunning = true;
             Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed", 3000);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed");
             Start();
         }
 
@@ -195,7 +195,7 @@ namespace MySimpleUtilities
         {
             isRunning = false;
             Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped", 3000);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped");
         }
 
         /// <summary>

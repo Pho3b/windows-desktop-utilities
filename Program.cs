@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MySimpleUtilities.Utilities;
 
 namespace MySimpleUtilities
 {
     class Program
     {
         private readonly XboxControllerAsMouse xboxControllerAsMouse = new XboxControllerAsMouse();
+        private readonly DesktopReorganizer folderReorganizer = new DesktopReorganizer();
         public static bool isUtilityRunning = false;
         public static Program main;
-        public static readonly string[] UTITILIES_LIST = { "XboxControllerAsMouse", "RearrangeDownloadFolder" };
+        public static readonly string[] UTITILIES_LIST = { "XboxControllerAsMouse", "FolderReorganizer" };
         public static readonly string[] COMMANDS_LIST =
         {
             "msu ls  -  Shows the list of the utilities",
@@ -51,11 +53,12 @@ namespace MySimpleUtilities
                         break;
                     case "msu start 0":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[0], ConsoleColor.DarkGreen);
-                        ShowBalloon(Program.UTITILIES_LIST[0], "Started", 3000);
+                        ShowBalloon(Program.UTITILIES_LIST[0], "Started");
                         xboxControllerAsMouse.Start();
                         break;
                     case "msu start 1":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[1], ConsoleColor.DarkGreen);
+                        folderReorganizer.Test();
                         break;
                     case "msu help":
                         PrintCommandsList();
@@ -124,7 +127,7 @@ namespace MySimpleUtilities
         /// <param name="title"></param>
         /// <param name="body"></param>
         /// <param name="body"></param>
-        public static void ShowBalloon(string title, string body, int time = 3000)
+        public static void ShowBalloon(string title, string body, int time = 5000)
         {
             NotifyIcon notifyIcon = new NotifyIcon();
             notifyIcon.Icon = SystemIcons.Information;
