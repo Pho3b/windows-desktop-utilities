@@ -35,6 +35,9 @@ namespace MySimpleUtilities.Utilities
             {
                 isRunning = CheckControllerConnection();
 
+                if (isRunning)
+                    Program.ShowBalloon(Program.UTITILIES_LIST[0], "Started");
+
                 while (isRunning)
                 {
                     Update();
@@ -181,11 +184,14 @@ namespace MySimpleUtilities.Utilities
         /// </summary>
         private void Resume()
         {
-            isPaused = false;
-            isRunning = true;
-            Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed");
-            Start();
+            if (CheckControllerConnection())
+            {
+                isPaused = false;
+                isRunning = true;
+                Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+                Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed");
+                Start();
+            }
         }
 
         /// <summary>

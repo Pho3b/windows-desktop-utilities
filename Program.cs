@@ -17,7 +17,7 @@ namespace MySimpleUtilities
             "msu ls  -  Shows the list of the utilities",
             "msu start {utitily index}",
             "msu help",
-            "msu quit",
+            "quit or :q",
             "clear"
         };
 
@@ -53,7 +53,6 @@ namespace MySimpleUtilities
                         break;
                     case "msu start 0":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[0], ConsoleColor.DarkGreen);
-                        ShowBalloon(Program.UTITILIES_LIST[0], "Started");
                         xboxControllerAsMouse.Start();
                         break;
                     case "msu start 1":
