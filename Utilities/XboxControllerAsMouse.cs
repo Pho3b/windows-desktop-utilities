@@ -4,7 +4,7 @@ using System;
 using SharpDX.XInput;
 using System.Runtime.InteropServices;
 
-namespace MySimpleUtilities
+namespace MySimpleUtilities.Utilities
 {
     class XboxControllerAsMouse
     {
@@ -34,6 +34,9 @@ namespace MySimpleUtilities
             try
             {
                 isRunning = CheckControllerConnection();
+
+                if (isRunning)
+                    Program.ShowBalloon(Program.UTITILIES_LIST[0], "Started");
 
                 while (isRunning)
                 {
@@ -170,7 +173,7 @@ namespace MySimpleUtilities
             isPaused = true;
             isRunning = false;
             Program.PrintColouredMessage("Paused application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused", 3000);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused");
             StartBackgroundListener();
         }
 
@@ -181,11 +184,14 @@ namespace MySimpleUtilities
         /// </summary>
         private void Resume()
         {
-            isPaused = false;
-            isRunning = true;
-            Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed", 3000);
-            Start();
+            if (CheckControllerConnection())
+            {
+                isPaused = false;
+                isRunning = true;
+                Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
+                Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed");
+                Start();
+            }
         }
 
         /// <summary>
@@ -195,7 +201,7 @@ namespace MySimpleUtilities
         {
             isRunning = false;
             Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped", 3000);
+            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped");
         }
 
         /// <summary>
