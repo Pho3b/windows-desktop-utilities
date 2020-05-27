@@ -8,16 +8,16 @@ namespace MySimpleUtilities
     class Program
     {
         private readonly XboxControllerAsMouse xboxControllerAsMouse = new XboxControllerAsMouse();
-        private readonly DesktopReorganizer folderReorganizer = new DesktopReorganizer();
+        private DesktopReorganizer folderReorganizer;
         public static bool isUtilityRunning = false;
         public static Program main;
         public static readonly string[] UTITILIES_LIST = { "XboxControllerAsMouse", "FolderReorganizer" };
         public static readonly string[] COMMANDS_LIST =
         {
-            "msu ls  -  Shows the list of the utilities",
+            "msu ls  -  Shows the list of the utilities and their indexes",
             "msu start {utitily index}",
             "msu help",
-            "quit or :q",
+            "msu quit or :q",
             "clear"
         };
 
@@ -32,7 +32,7 @@ namespace MySimpleUtilities
 
         public Program()
         {
-            PrintColouredMessage("Welcome to MSU App!\nType 'msu help' to show the commands list, 'msu start {0} to start a utility or 'msu quit' to quit the app\n", ConsoleColor.DarkCyan, false);
+            PrintColouredMessage("Welcome to MSU App!\nType 'msu help' to show the commands list, 'msu start {0}' to start a utility or 'msu quit' to quit the app\n", ConsoleColor.DarkCyan, false);
         }
 
         public void StartProgramHub()
@@ -57,7 +57,8 @@ namespace MySimpleUtilities
                         break;
                     case "msu start 1":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[1], ConsoleColor.DarkGreen);
-                        folderReorganizer.Test();
+                        folderReorganizer = new DesktopReorganizer();
+                        folderReorganizer.Reorganize();
                         break;
                     case "msu help":
                         PrintCommandsList();
@@ -72,7 +73,7 @@ namespace MySimpleUtilities
                         break;
                 }
             }
-            while ((userInput != ":q" && userInput != "quit") || isUtilityRunning);
+            while ((userInput != ":q" && userInput != "msu quit") || isUtilityRunning);
         }
 
         /// <summary>
