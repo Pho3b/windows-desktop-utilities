@@ -149,7 +149,7 @@ namespace MySimpleUtilities.Utilities
         {
             Program.PrintColouredMessage("...now listenint in background, hold (A + B + X + Y) to resume the utility", ConsoleColor.Yellow, false);
 
-            while(isPaused)
+            while (isPaused)
             {
                 controller.GetState(out controllerState);
 
@@ -166,7 +166,7 @@ namespace MySimpleUtilities.Utilities
         }
 
         /// <summary>
-        /// Pause the application and starts the BackgroundListener
+        /// Pause the utility and starts the BackgroundListener
         /// </summary>
         private void Pause()
         {
@@ -178,9 +178,7 @@ namespace MySimpleUtilities.Utilities
         }
 
         /// <summary>
-        /// TODO: Find a good buttons combination to bind to this method.
-        /// Hint: All 4 buttons pressed toghether
-        /// Implement a BackgroundUpdate method that listens only to this combination with a very long threading time
+        /// Resume the Paused utility if buttons (A + B + Y + X) are pressed toghether for at least 2 seconds
         /// </summary>
         private void Resume()
         {
@@ -216,8 +214,8 @@ namespace MySimpleUtilities.Utilities
             {
                 return true;
             }
-
             Program.PrintColouredMessage("Controller not found, please connect one", ConsoleColor.DarkRed);
+
             return false;
         }
 
