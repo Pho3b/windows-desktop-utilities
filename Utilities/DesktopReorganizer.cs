@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing.Text;
 using System.IO;
 
 namespace MySimpleUtilities.Utilities
