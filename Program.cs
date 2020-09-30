@@ -29,7 +29,6 @@ namespace MySimpleUtilities
             main.StartProgramHub();
         }
 
-
         public Program()
         {
             PrintColouredMessage("Welcome to MSU App!\nType 'msu help' to show the commands list, 'msu start {0}' to start a utility or 'msu quit' to quit the app\n", ConsoleColor.DarkCyan, false);

@@ -68,7 +68,7 @@ namespace MySimpleUtilities.Utilities
         {
             try
             {
-                return word = "_" + char.ToUpper(word[1]) + word.Substring(2);
+                return word = char.ToUpper(word[1]) + word.Substring(2);
             }
             catch (Exception e)
             {
