@@ -4,18 +4,20 @@ using System.IO;
 
 namespace MySimpleUtilities.utilities
 {
-    class DesktopReorganizer : AbstractUtility, IUtility
+    class FolderReorganizer : AbstractUtility, IUtility
     {
         private readonly string desktopPath;
         private readonly string[] desktopFilePaths;
 
 
 
-        public DesktopReorganizer()
+        public FolderReorganizer()
         {
             desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             desktopFilePaths = Directory.GetFiles(desktopPath);
         }
+
+        // TODO:Implement an overload constructor where the user can pass the chosen folder path
 
         /// <summary>
         /// Reorganizes your current Desktop by creating a new folder (If it doesn't already exists) for every 
@@ -44,25 +46,27 @@ namespace MySimpleUtilities.utilities
                     destinationFilePath = Path.Combine(destinationFolderPath, Path.GetFileName(filePath));
 
                     File.Move(filePath, destinationFilePath);
-                    Program.PrintColouredMessage("Moving file to: " + destinationFilePath, ConsoleColor.Yellow);
+                    HelperComponent.PrintColouredMessage("Moving file to: " + destinationFilePath, ConsoleColor.Yellow);
                 }
                 catch (IOException e)
                 {
-                    Program.PrintColouredMessage("IO Error: " + e.Message, ConsoleColor.Red);
+                    HelperComponent.PrintColouredMessage("IO Error: " + e.Message, ConsoleColor.Red);
                 }
                 catch (Exception e)
                 {
-                    Program.PrintColouredMessage("General Error: " + e.Message, ConsoleColor.Red);
+                    HelperComponent.PrintColouredMessage("General Error: " + e.Message, ConsoleColor.Red);
                 }
             }
 
-            Program.ShowBalloon(Program.UTITILIES_LIST[1], "Execution complete");
-            Program.PrintColouredMessage("Execution of " + Program.UTITILIES_LIST[1] + " completed", ConsoleColor.DarkGreen);
+            Stop();
         }
 
+        /// <summary>
+        /// Prints default stop utility messages
+        /// </summary>
         public void Stop()
         {
-            throw new NotImplementedException();
+            stopNotification();
         }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace MySimpleUtilities.utilities
             }
             catch (Exception e)
             {
-                Program.PrintColouredMessage(e.Message, ConsoleColor.Red);
+                HelperComponent.PrintColouredMessage(e.Message, ConsoleColor.Red);
             }
 
             return word;

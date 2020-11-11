@@ -69,10 +69,12 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utilities\DesktopReorganizer.cs" />
+    <Compile Include="utilities\exceptions\UnexistingUtilityException.cs" />
+    <Compile Include="utilities\FolderReorganizer.cs" />
     <Compile Include="utilities\factory\AbstractUtility.cs" />
     <Compile Include="utilities\factory\IUtility.cs" />
-    <Compile Include="utilities\UtilityFactory.cs" />
+    <Compile Include="utilities\factory\UtilityFactory.cs" />
+    <Compile Include="HelperComponent.cs" />
     <Compile Include="utilities\XboxControllerAsMouse.cs" />
   </ItemGroup>
   <ItemGroup>

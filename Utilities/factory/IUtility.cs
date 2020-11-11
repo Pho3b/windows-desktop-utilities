@@ -4,12 +4,12 @@ namespace MySimpleUtilities.utilities.factory
     interface IUtility
     {
         /// <summary>
-        /// Starts the utility
+        /// Utility start action
         /// </summary>
         void Start();
 
         /// <summary>
-        /// Stops the utility
+        /// Utility stop action
         /// </summary>
         void Stop();
     }
