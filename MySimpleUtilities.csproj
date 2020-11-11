@@ -69,8 +69,11 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\DesktopReorganizer.cs" />
-    <Compile Include="Utilities\XboxControllerAsMouse.cs" />
+    <Compile Include="utilities\DesktopReorganizer.cs" />
+    <Compile Include="utilities\factory\AbstractUtility.cs" />
+    <Compile Include="utilities\factory\IUtility.cs" />
+    <Compile Include="utilities\UtilityFactory.cs" />
+    <Compile Include="utilities\XboxControllerAsMouse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -4,13 +4,13 @@ using System;
 using SharpDX.XInput;
 using System.Runtime.InteropServices;
 
-namespace MySimpleUtilities.Utilities
+namespace MySimpleUtilities.utilities
 {
     class XboxControllerAsMouse
     {
         private readonly Controller controller;
         private State controllerState;
-        public bool isRunning = false;
+        private bool isRunning = false;
         private bool isPaused = false;
         private bool buttonPressed = false;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;

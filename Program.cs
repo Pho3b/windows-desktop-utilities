@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using MySimpleUtilities.Utilities;
+using MySimpleUtilities.utilities;
 
 namespace MySimpleUtilities
 {
@@ -16,7 +16,7 @@ namespace MySimpleUtilities
         {
             "msu ls  -  Shows the list of the utilities and their indexes",
             "msu start {utitily index}",
-            "msu help",
+            "msu -h",
             "msu quit or :q",
             "clear"
         };
@@ -57,9 +57,9 @@ namespace MySimpleUtilities
                     case "msu start 1":
                         PrintColouredMessage("Launched utility " + UTITILIES_LIST[1], ConsoleColor.DarkGreen);
                         folderReorganizer = new DesktopReorganizer();
-                        folderReorganizer.Reorganize();
+                        folderReorganizer.Start();
                         break;
-                    case "msu help":
+                    case "msu -h":
                         PrintCommandsList();
                         break;
                     case "clear":
@@ -68,7 +68,7 @@ namespace MySimpleUtilities
                     case "":
                         break;
                     default:
-                        PrintColouredMessage("Command not found, type 'msu -help' to show the commands list", ConsoleColor.White);
+                        PrintColouredMessage("Command not found, type 'msu -h' to show the commands list", ConsoleColor.White);
                         break;
                 }
             }

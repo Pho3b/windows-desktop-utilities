@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MySimpleUtilities.utilities.factory;
+using System;
 using System.IO;
 
-namespace MySimpleUtilities.Utilities
+namespace MySimpleUtilities.utilities
 {
-    class DesktopReorganizer
+    class DesktopReorganizer : AbstractUtility, IUtility
     {
         private readonly string desktopPath;
         private readonly string[] desktopFilePaths;
@@ -20,7 +21,7 @@ namespace MySimpleUtilities.Utilities
         /// Reorganizes your current Desktop by creating a new folder (If it doesn't already exists) for every 
         /// different extension type that it finds. Then it moves the according files into the correct named foder.
         /// </summary>
-        public void Reorganize()
+        public void Start()
         {
             string currentFileName;
             string currentFileExtension;
@@ -57,6 +58,11 @@ namespace MySimpleUtilities.Utilities
 
             Program.ShowBalloon(Program.UTITILIES_LIST[1], "Execution complete");
             Program.PrintColouredMessage("Execution of " + Program.UTITILIES_LIST[1] + " completed", ConsoleColor.DarkGreen);
+        }
+
+        public void Stop()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
