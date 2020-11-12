@@ -1,16 +1,17 @@
-﻿using System.Windows.Forms;
-using System.Drawing;
-using System;
+﻿using MySimpleUtilities.utilities.factory;
 using SharpDX.XInput;
+using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace MySimpleUtilities.Utilities
+namespace MySimpleUtilities.utilities
 {
-    class XboxControllerAsMouse
+    class XboxControllerAsMouse : AbstractUtility, IUtility
     {
         private readonly Controller controller;
         private State controllerState;
-        public bool isRunning = false;
+        private bool isRunning = false;
         private bool isPaused = false;
         private bool buttonPressed = false;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
@@ -36,7 +37,7 @@ namespace MySimpleUtilities.Utilities
                 isRunning = CheckControllerConnection();
 
                 if (isRunning)
-                    Program.ShowBalloon(Program.UTITILIES_LIST[0], "Started");
+                    startNotification(true);
 
                 while (isRunning)
                 {
@@ -46,7 +47,7 @@ namespace MySimpleUtilities.Utilities
             }
             catch (SharpDX.SharpDXException e)
             {
-                Program.PrintColouredMessage(e.Message, ConsoleColor.DarkRed);
+                HelperComponent.PrintColouredMessage(e.Message, ConsoleColor.DarkRed);
                 isRunning = false;
             }
         }
@@ -147,7 +148,7 @@ namespace MySimpleUtilities.Utilities
         /// </summary>
         private void StartBackgroundListener()
         {
-            Program.PrintColouredMessage("...now listenint in background, hold (A + B + X + Y) to resume the utility", ConsoleColor.Yellow, false);
+            HelperComponent.PrintColouredMessage("...now listenint in background, hold (A + B + X + Y) to resume the utility", ConsoleColor.Yellow, false);
 
             while (isPaused)
             {
@@ -172,8 +173,8 @@ namespace MySimpleUtilities.Utilities
         {
             isPaused = true;
             isRunning = false;
-            Program.PrintColouredMessage("Paused application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Paused");
+            HelperComponent.PrintColouredMessage("Paused application " + getName(), ConsoleColor.DarkYellow);
+            HelperComponent.ShowBalloon(getName(), "Paused");
             StartBackgroundListener();
         }
 
@@ -186,8 +187,8 @@ namespace MySimpleUtilities.Utilities
             {
                 isPaused = false;
                 isRunning = true;
-                Program.PrintColouredMessage("Resumed utility " + Program.UTITILIES_LIST[0], ConsoleColor.DarkYellow);
-                Program.ShowBalloon(Program.UTITILIES_LIST[0], "Resumed");
+                HelperComponent.PrintColouredMessage("Resumed utility " + getName(), ConsoleColor.DarkYellow);
+                HelperComponent.ShowBalloon(getName(), "Resumed");
                 Start();
             }
         }
@@ -198,8 +199,7 @@ namespace MySimpleUtilities.Utilities
         public void Stop()
         {
             isRunning = false;
-            Program.PrintColouredMessage("Stopped application " + Program.UTITILIES_LIST[0], ConsoleColor.DarkRed);
-            Program.ShowBalloon(Program.UTITILIES_LIST[0], "Stopped");
+            stopNotification();
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace MySimpleUtilities.Utilities
             {
                 return true;
             }
-            Program.PrintColouredMessage("Controller not found, please connect one", ConsoleColor.DarkRed);
+            HelperComponent.PrintColouredMessage("Controller not found, please connect one", ConsoleColor.DarkRed);
 
             return false;
         }
