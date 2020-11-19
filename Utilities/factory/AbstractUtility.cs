@@ -38,7 +38,7 @@ namespace MySimpleUtilities.utilities.factory
         // TODO: Implement decorator pattern on this class to make it print 'Execution completed'
         protected void stopNotification(bool withBaloon = false)
         {
-            HelperComponent.PrintColouredMessage("Stopped application " + getName(), ConsoleColor.DarkRed);
+            HelperComponent.PrintColouredMessage("Concluded application " + getName(), ConsoleColor.DarkRed);
 
             if (withBaloon)
             {

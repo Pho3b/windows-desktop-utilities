@@ -10,8 +10,8 @@ namespace MySimpleUtilities.utilities
         public enum utilities { XboxControllerAsMouse, FolderReorganizer };
         public static readonly string[] COMMANDS_LIST =
         {
-            "msu ls  -  Shows the list of the utilities and their indexes",
-            "msu start {utitily index}",
+            "msu -l  :  Shows the list of the utilities and their indexes",
+            "msu {utitily index}",
             "msu -h",
             "msu quit or :q",
             "clear"

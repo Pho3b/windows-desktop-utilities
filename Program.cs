@@ -19,7 +19,7 @@ namespace MySimpleUtilities
 
         public Program()
         {
-            HelperComponent.PrintColouredMessage("Welcome to MSU App!\nType 'msu help' to show the commands list, 'msu start {0}' " +
+            HelperComponent.PrintColouredMessage("Welcome to MSU App!\nType 'msu -h' to show the commands list, 'msu start {0}' " +
                 "to start a utility or 'msu quit' to quit the app\n", ConsoleColor.Yellow, false);
             utilityFactory = new UtilityFactory();
         }
@@ -34,17 +34,17 @@ namespace MySimpleUtilities
 
                 switch (userInput.ToLower().Trim())
                 {
-                    case "msu ls":
+                    case "msu -l":
                         HelperComponent.PrintUtilitiesList();
                         break;
-                    case "msu start":
+                    case "msu":
                         HelperComponent.PrintColouredMessage("Type the index of the utility that you want to start", ConsoleColor.White);
                         break;
-                    case "msu start 0":
+                    case "msu 0":
                         utilityFactory.createUtility("XboxControllerAsMouse").Start();
                         break;
-                    case "msu start 1":
-                        utilityFactory.createUtility("XboxControllerAsMouse").Start();
+                    case "msu 1":
+                        utilityFactory.createUtility("FolderReorganizer").Start();
                         break;
                     case "msu -h":
                         HelperComponent.PrintCommandsList();

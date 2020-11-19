@@ -15,6 +15,8 @@ namespace MySimpleUtilities.utilities
         {
             desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             desktopFilePaths = Directory.GetFiles(desktopPath);
+            Console.WriteLine("construct");
+
         }
 
         // TODO:Implement an overload constructor where the user can pass the chosen folder path
@@ -29,6 +31,8 @@ namespace MySimpleUtilities.utilities
             string currentFileExtension;
             string destinationFolderPath;
             string destinationFilePath;
+
+            startNotification(true);
 
             foreach (string filePath in desktopFilePaths)
             {
