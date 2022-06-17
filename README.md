@@ -1,9 +1,7 @@
-﻿# MySimpleUtilities
+﻿## Windows-desktop-utilities
 
-A collection of various utility for Windows 10.
+A Command line interface application integrating various windows 10 utility commands:
 
-Utilities list:
-
-1 - It allows you to control the mouse inputs with your XBOX controller.  
-2 - Reorganizes your current Desktop by creating a new folder (If it doesn't already exists) for every 
-    different extension type that it finds. Then it moves the according files into the related foder.
+* #### Currently implemented commands:
+    1. Command that when launched allows the user to control the mouse input through the Xbox 360 controller  ``(If any is found plugged to the PC)`` 
+    2. Command that reorganizes your current Desktop by moving any found file in a folder renamed with the file's extension.
